@@ -1,12 +1,13 @@
-## The scenario of this builder
-You will feel great when:
-- a new team member need to start up your work environment
-- a team manager needn't spend extra time on member's onboarding
-
 ## Introduction
 The script will do:
 - Install automatically some software in your computer
 - Configure global env for some tools, such as composer, git
+
+## Why should you need it?
+You will feel great when:
+- a new team member need to start up your work environment
+- a team manager needn't spend extra time on member's onboarding
+
 
 ## Software installed
 * Utils
