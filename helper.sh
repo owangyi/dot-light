@@ -21,63 +21,6 @@ color_print() {
     printf "%s%s%s\n" "$2" "$1" "$reset"
 }
 
-# Logging functions
-setup_logging() {
-    local log_dir="${HOME}/.dotfile-logs"
-    local timestamp=$(date '+%Y%m%d_%H%M%S')
-    
-    # Create log directory if it doesn't exist
-    mkdir -p "$log_dir"
-    
-    # Set log file path
-    export LOG_FILE="${log_dir}/dotfile_setup_${timestamp}.log"
-    
-    # Log initial message
-    log_info "Starting dotfile setup at $(date)"
-    log_info "Log file: $LOG_FILE"
-}
-
-log_info() {
-    local message="[INFO] $(date '+%Y-%m-%d %H:%M:%S') - $1"
-    echo "$message" | tee -a "$LOG_FILE"
-}
-
-log_error() {
-    local message="[ERROR] $(date '+%Y-%m-%d %H:%M:%S') - $1"
-    echo "$message" | tee -a "$LOG_FILE" >&2
-    color_print "$1" "$red"
-}
-
-log_success() {
-    local message="[SUCCESS] $(date '+%Y-%m-%d %H:%M:%S') - $1"
-    echo "$message" | tee -a "$LOG_FILE"
-    color_print "$1" "$green"
-}
-
-log_warning() {
-    local message="[WARNING] $(date '+%Y-%m-%d %H:%M:%S') - $1"
-    echo "$message" | tee -a "$LOG_FILE"
-    color_print "$1" "$yellow"
-}
-
-# Command execution with logging
-log_exec() {
-    local cmd="$1"
-    local description="$2"
-    
-    log_info "Executing: $description"
-    log_info "Command: $cmd"
-    
-    if eval "$cmd" 2>&1 | tee -a "$LOG_FILE"; then
-        log_success "Completed: $description"
-        return 0
-    else
-        local exit_code=$?
-        log_error "Failed: $description (exit code: $exit_code)"
-        return $exit_code
-    fi
-}
-
 which_team() {
     if [ -z "$team" ]; then
     PS3="Which team are you in? "
